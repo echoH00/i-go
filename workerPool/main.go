@@ -40,6 +40,7 @@ func init() {
 	}
 }
 
+// 模拟任务处理
 func processTask(ctx context.Context, workerID int, task Task) bool {
 	result := make(chan bool)
 	go func() {
@@ -73,7 +74,7 @@ func addWorker(workerID int, taskQ chan Task) {
 		for {
 			select {
 			case <-workerIDLE.C:
-				log.Printf("[Worker%v]空闲5分钟自动退出", workerID)
+				log.Printf("[Worker%v]空闲5ms自动退出", workerID)
 				mu.Lock()
 				currentWorker--
 				mu.Unlock()
@@ -101,6 +102,7 @@ func addWorker(workerID int, taskQ chan Task) {
 	}()
 }
 
+// 任务分发器
 func dispatcher(ctx context.Context, wg *sync.WaitGroup) {
 	defer wg.Done()
 	ticker := time.NewTicker(CheckInterval)
@@ -109,7 +111,7 @@ func dispatcher(ctx context.Context, wg *sync.WaitGroup) {
 		case <-ctx.Done():
 			log.Printf("dispatcher context超时退出")
 			return
-		case <-ticker.C:
+		case <-ticker.C:  // 定时触发
 			log.Printf("到达检测周期")
 			log.Printf("task长度%v, 当前worker数量%v", len(TaskQueue), currentWorker)
 			if len(TaskQueue) > 0 && currentWorker < MaxWorkers {
