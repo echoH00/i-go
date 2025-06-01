@@ -24,7 +24,7 @@ import (
 )
 
 func main() {
-	restcfg, _ := clientcmd.BuildConfigFromFlags("", "C:\\Users\\echo\\Desktop\\goproject\\informer\\client\\config")
+	restcfg, _ := clientcmd.BuildConfigFromFlags("", "./config")
 	clientset, _ := kubernetes.NewForConfig(restcfg)
 	lw := &cache.ListWatch{
 		ListFunc: func(options metav1.ListOptions) (runtime.Object, error) {
