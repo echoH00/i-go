@@ -65,7 +65,7 @@ func processNextItem(queue workqueue.RateLimitingInterface, indexer cache.Indexe
 }
 
 func main() {
-	restcfg, _ := clientcmd.BuildConfigFromFlags("", "C:\\Users\\echo\\Desktop\\goproject\\informer\\client\\config")
+	restcfg, _ := clientcmd.BuildConfigFromFlags("", "./config")
 	clientset, _ := kubernetes.NewForConfig(restcfg)
 	factory := informers.NewSharedInformerFactory(clientset, time.Minute*10)
 	podInfomer := factory.Core().V1().Pods().Informer() // sharedIndexInformer
