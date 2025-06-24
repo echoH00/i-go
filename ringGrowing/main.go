@@ -27,7 +27,7 @@ func main() {
 		}
 	}()
 
-	go dispatcher.run(stopCh) // 从nextCh消费数据
+	go dispatcher.run(stopCh) // 消费者 nextCh <- [Buffer] <- (obj <- addCh)
 
 	time.Sleep(1 * time.Second)
 	fmt.Printf("%d event processed\n", count.Load())
